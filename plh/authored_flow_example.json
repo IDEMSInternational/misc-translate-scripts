@@ -1,0 +1,281 @@
+{
+  "version": "13",
+  "site": "https://rapidpro.idems.international",
+  "flows": [
+    {
+      "name": "Friend_Calm",
+      "uuid": "b40925bd-b497-4122-83a1-f92e07ef3d42",
+      "spec_version": "13.1.0",
+      "language": "base",
+      "type": "messaging",
+      "nodes": [
+        {
+          "uuid": "d0f7c077-8091-4a57-b93c-e2d9e1e22aff",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Hi my friend, it\u2019s really good to see you.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "7b6b7f44-cd4a-470d-982e-0c79aad70bce"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "a52fa4de-f6b0-4a5a-8b77-3bfe463543a6",
+              "destination_uuid": "50ba9809-8420-4d84-a089-a2ce2be3c383"
+            }
+          ]
+        },
+        {
+          "uuid": "50ba9809-8420-4d84-a089-a2ce2be3c383",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "d0dbcafb-0c2d-4a7f-ba25-78e3d9bd05df",
+            "cases": [
+              {
+                "arguments": [
+                  "sad"
+                ],
+                "type": "has_any_word",
+                "uuid": "de6d5b7f-7c84-47dd-9153-e242ba5e28c5",
+                "category_uuid": "fe794383-683b-4831-b462-88d57d05dce3"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "fe794383-683b-4831-b462-88d57d05dce3",
+                "name": "Sad",
+                "exit_uuid": "ec887518-3810-4314-b5b1-a4fddb463b28"
+              },
+              {
+                "uuid": "d0dbcafb-0c2d-4a7f-ba25-78e3d9bd05df",
+                "name": "Other",
+                "exit_uuid": "2fb085fe-a202-49ef-9814-aaa05549d73c"
+              }
+            ],
+            "operand": "@fields.last_emo_check"
+          },
+          "exits": [
+            {
+              "uuid": "ec887518-3810-4314-b5b1-a4fddb463b28",
+              "destination_uuid": "1b42e87b-cbe6-4f68-b713-aaabeb29ed05"
+            },
+            {
+              "uuid": "2fb085fe-a202-49ef-9814-aaa05549d73c",
+              "destination_uuid": "965553fc-1397-4352-9a55-1645d21c9fb5"
+            }
+          ]
+        },
+        {
+          "uuid": "1b42e87b-cbe6-4f68-b713-aaabeb29ed05",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "You don\u2019t look too happy today? ",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "cac0611a-f0ef-4328-b801-0caf5b9f7994"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "56d40ae3-dd77-44f5-b1f7-303fe437b123",
+              "destination_uuid": "965553fc-1397-4352-9a55-1645d21c9fb5"
+            }
+          ]
+        },
+        {
+          "uuid": "965553fc-1397-4352-9a55-1645d21c9fb5",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Do you have 30 seconds? Let\u2019s take a quick pause together. It may help you feel more relaxed and peaceful. ",
+              "type": "send_msg",
+              "quick_replies": [
+                "Yes",
+                "No"
+              ],
+              "uuid": "7df4f26c-e4b3-40d4-9d11-e7b098c54eb6"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "7e8ece15-9c01-4409-b7ce-2785fd1a53bf",
+              "destination_uuid": "3bc4553c-732d-4aae-9387-b7542da2a904"
+            }
+          ]
+        },
+        {
+          "uuid": "3bc4553c-732d-4aae-9387-b7542da2a904",
+          "actions": [],
+          "router": {
+            "type": "switch",
+            "default_category_uuid": "b02829a6-6648-4e1c-b8be-8521e10806cb",
+            "cases": [
+              {
+                "arguments": [
+                  "Yes"
+                ],
+                "type": "has_any_word",
+                "uuid": "aa57ac25-86aa-4706-8bec-6242ec0b7c01",
+                "category_uuid": "65bed768-7874-4ec0-ab39-b360c1cb85b2"
+              }
+            ],
+            "categories": [
+              {
+                "uuid": "65bed768-7874-4ec0-ab39-b360c1cb85b2",
+                "name": "Yes",
+                "exit_uuid": "b1f52a6b-10c7-43cc-9910-10e767cbbdd0"
+              },
+              {
+                "uuid": "b02829a6-6648-4e1c-b8be-8521e10806cb",
+                "name": "Other",
+                "exit_uuid": "96b551c4-3ef8-49e2-859c-3a6b628ccd29"
+              }
+            ],
+            "operand": "@input.text",
+            "wait": {
+              "type": "msg"
+            },
+            "result_name": "Result 1"
+          },
+          "exits": [
+            {
+              "uuid": "b1f52a6b-10c7-43cc-9910-10e767cbbdd0",
+              "destination_uuid": "36b2fc72-d8d3-40e7-9af6-4c59ac78d58e"
+            },
+            {
+              "uuid": "96b551c4-3ef8-49e2-859c-3a6b628ccd29",
+              "destination_uuid": "f83af6ac-5d89-4846-98b4-7f663b497c61"
+            }
+          ]
+        },
+        {
+          "uuid": "36b2fc72-d8d3-40e7-9af6-4c59ac78d58e",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "Sit down, close your eyes and listen to your breath as it goes in and out. Notice how you feel. When you are ready open your eyes again. Try this whenever you are feeling stressed and you need a break to reconnect.",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "cc089c40-e1f3-449e-b2c7-4619b3981f5e"
+            },
+            {
+              "attachments": [],
+              "text": "Well done for taking a pause. You can really be proud of yourself, I know how hard you work to look after your family!\n",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "8c65aa27-b442-4bf5-85f1-f23148f6302d"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "a82f7ac8-409b-4e62-b347-17106caeceb2",
+              "destination_uuid": "f83af6ac-5d89-4846-98b4-7f663b497c61"
+            }
+          ]
+        },
+        {
+          "uuid": "f83af6ac-5d89-4846-98b4-7f663b497c61",
+          "actions": [
+            {
+              "attachments": [],
+              "text": "I just saw Elder down the road. He may have some other helpful ideas for you!",
+              "type": "send_msg",
+              "quick_replies": [],
+              "uuid": "91d38982-a646-4e16-9a90-8afee4c07093"
+            }
+          ],
+          "exits": [
+            {
+              "uuid": "a815e393-020d-4f0c-925f-d0501dcb9f33",
+              "destination_uuid": null
+            }
+          ]
+        }
+      ],
+      "_ui": {
+        "nodes": {
+          "d0f7c077-8091-4a57-b93c-e2d9e1e22aff": {
+            "position": {
+              "left": 260,
+              "top": 13
+            },
+            "type": "execute_actions"
+          },
+          "50ba9809-8420-4d84-a089-a2ce2be3c383": {
+            "type": "split_by_contact_field",
+            "position": {
+              "left": 260,
+              "top": 120
+            },
+            "config": {
+              "operand": {
+                "id": "last_emo_check",
+                "type": "field",
+                "name": "Last Emo Check"
+              },
+              "cases": {}
+            }
+          },
+          "1b42e87b-cbe6-4f68-b713-aaabeb29ed05": {
+            "position": {
+              "left": 80,
+              "top": 220
+            },
+            "type": "execute_actions"
+          },
+          "965553fc-1397-4352-9a55-1645d21c9fb5": {
+            "position": {
+              "left": 240,
+              "top": 380
+            },
+            "type": "execute_actions"
+          },
+          "3bc4553c-732d-4aae-9387-b7542da2a904": {
+            "type": "wait_for_response",
+            "position": {
+              "left": 240,
+              "top": 620
+            },
+            "config": {
+              "cases": {}
+            }
+          },
+          "36b2fc72-d8d3-40e7-9af6-4c59ac78d58e": {
+            "position": {
+              "left": 80,
+              "top": 800
+            },
+            "type": "execute_actions"
+          },
+          "f83af6ac-5d89-4846-98b4-7f663b497c61": {
+            "position": {
+              "left": 280,
+              "top": 1180
+            },
+            "type": "execute_actions"
+          }
+        }
+      },
+      "revision": 27,
+      "expire_after_minutes": 10080,
+      "metadata": {
+        "revision": 1
+      },
+      "localization": {}
+    }
+  ],
+  "campaigns": [],
+  "triggers": [],
+  "fields": [
+    {
+      "key": "last_emo_check",
+      "name": "Last Emo Check",
+      "type": "text"
+    }
+  ],
+  "groups": []
+}
