@@ -47,17 +47,7 @@ let contentList: {
 
 console.log("Content list parsed: ", contentList);
 
-function getRouterFromRow(row: ConversationExcelRow, rows: ConversationExcelRow[], nodesById: { [nodeId: string]: RapidProFlowExport.Node }) {
-    const fromNodesWithDesinations = getFromRowNumbers(row)
-        .map((rowNumber) => rows[rowNumber - 2].rapidProNode)
-        .filter((node) => node !== undefined && node.exits.length > 0 && node.exits[0].destination_uuid);
-    const fromRowsThatExitToRouterNodes = fromNodesWithDesinations
-        .map((node) => nodesById[node.exits[0].destination_uuid])
-        .filter((node) => node.router !== undefined);
-    return fromRowsThatExitToRouterNodes[0];
-}
-
-function getFromRowNumbers(row: ConversationExcelRow): number[] {
+function getFromRowNumbers(row: ConversationExcelRow, rows: ConversationExcelRow[]): number[] {
     if (row.From) {
         if (typeof row.From === "number") {
             return [row.From];
@@ -68,7 +58,22 @@ function getFromRowNumbers(row: ConversationExcelRow): number[] {
                 .filter((num) => num != NaN)
         }
     }
-    return [];
+    return [rows.indexOf(row) + 2];
+}
+
+function getFromNodes(row: ConversationExcelRow, rows: ConversationExcelRow[]) {
+    return getFromRowNumbers(row, rows)
+        .map((rowNumber) => rows[rowNumber - 2].rapidProNode)
+        .filter((node) => node !== undefined);
+}
+
+function getRouterFromRow(row: ConversationExcelRow, rows: ConversationExcelRow[], nodesById: { [nodeId: string]: RapidProFlowExport.Node }) {
+    const fromRowsThatExitToRouterNodes = getFromNodes(row, rows)
+        .filter((node) => node !== undefined && node.exits.length > 0 && node.exits[0].destination_uuid)
+        .map((node) => nodesById[node.exits[0].destination_uuid])
+        .filter((node) => node.router !== undefined);
+        
+    return fromRowsThatExitToRouterNodes[0];
 }
 
 function processContactVariableRow(
